@@ -34,6 +34,26 @@ function viewdir()
 }
 
 /**
+ * ### Gets the full path to the storage directory
+ *
+ * @return string
+ */
+function storage()
+{
+    return realpath(appdir() . '../storage') . '/';
+}
+
+/**
+ * ### Gets the full path to the log directory
+ *
+ * @return string
+ */
+function logdir()
+{
+    return realpath(appdir() . '../storage/log') . '/';
+}
+
+/**
  * ### Gets the full path to the cache directory
  *
  * @return string

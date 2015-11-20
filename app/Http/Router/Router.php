@@ -84,11 +84,6 @@ class Router
                     $this->routes[$this->uri]['pattern'] = $route;
                     $this->route = $this->routes[$this->uri];
                     return $this->route;
-                } else {
-
-                    // ### Route doesn't match, try next one
-
-                    continue;
                 }
             } else {
 
@@ -103,11 +98,6 @@ class Router
                     $data['pattern'] = $route;
                     $this->route = $data;
                     return $this->route;
-                } else {
-
-                    // ### Route doesn't match, try next one
-
-                    continue;
                 }
             }
         }
@@ -175,7 +165,7 @@ class Router
                 if ($try) $passed++;
             } else {
                 if (!isset($check[$key])) continue;
-                if (empty($check[$key])) continue;
+
                 if ($rules[$key] === $check[$key]) $passed++;
             }
         }

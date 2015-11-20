@@ -369,7 +369,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/propelorm/Propel2/zipball/a21912fc3daff453bbd871a13bc003c0a84f40ec",
+                "url": "https://api.github.com/repos/propelorm/Propel2/zipball/0299c2343a09217d7402b33e03dd292abf49063e",
                 "reference": "a21912fc3daff453bbd871a13bc003c0a84f40ec",
                 "shasum": ""
             },

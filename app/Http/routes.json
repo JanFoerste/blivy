@@ -4,13 +4,12 @@
     "controller": "PageController:home",
     "name": "index"
   },
-  "/user/(id)/(option)": {
+  "/user/(id)/edit": {
     "method": "GET",
     "controller": "PageController:home",
     "name": "user",
     "params": {
-      "(id)": "integer",
-      "(option)": "string"
+      "(id)": "integer"
     }
   }
 }
