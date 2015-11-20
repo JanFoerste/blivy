@@ -1,0 +1,26 @@
+{
+  "GET": {
+    "/" : {
+
+    },
+    "user" : {
+
+    },
+
+
+    "/": {
+      "controller": "PageController:home",
+      "name": "index"
+    },
+    "/user/(id)": {
+      "controller": "PageController:user",
+      "name": "user",
+      "param": "id:integer"
+    }
+  },
+  "POST": {
+    "/post": {
+      "controller": "PageController:home"
+    }
+  }
+}

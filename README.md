@@ -1,0 +1,3 @@
+# manager
+
+A manager.. thingy

@@ -1,0 +1,22 @@
+{
+  "require": {
+    "filp/whoops": "1.*",
+    "vlucas/phpdotenv": "^2.1",
+    "propel/propel": "~2.0@dev",
+    "monolog/monolog": "^1.17",
+    "malkusch/bav": "~1.0",
+    "respect/validation": "^1.0",
+    "predis/predis": "^1.0",
+    "phpmailer/phpmailer": "^5.2"
+  },
+  "autoload": {
+    "classmap": [
+      "app/Request",
+      "app/Http",
+      "app/Database"
+    ],
+    "psr-4": {
+      "Manager\\": "app/"
+    }
+  }
+}

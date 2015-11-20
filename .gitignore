@@ -1,0 +1,10 @@
+# ---> Laravel
+.idea/
+/bootstrap/compiled.php
+vendor/
+generated-*/
+.env.*.php
+.env.php
+.env
+propel.yml
+/bootstrap/cache/file/*

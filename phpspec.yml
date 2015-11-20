@@ -1,0 +1,4 @@
+main:
+    namespace: Manager
+    psr4_prefix: Manager
+    src_path: app
