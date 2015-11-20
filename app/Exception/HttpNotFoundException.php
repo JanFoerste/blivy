@@ -11,7 +11,7 @@ class HttpNotFoundException extends Exception
 {
     public function __construct()
     {
-        $message = 'The requested route is not available!';
+        $message = 'The requested route does not exist!';
         parent::__construct($message, 404, null, ['URI' => Router::formatURI($_SERVER['REQUEST_URI'])]);
     }
 }

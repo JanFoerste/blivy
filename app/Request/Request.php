@@ -12,8 +12,8 @@ class Request
     public function __construct()
     {
         $this->initSession();
-        $router = new Router();
-        return $router->route();
+        $_SESSION['router'] = new Router();
+        return $_SESSION['router']->route();
     }
 
     private function initSession()

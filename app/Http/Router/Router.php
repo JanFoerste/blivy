@@ -10,6 +10,7 @@ use Manager\Exception\Exception;
 use Manager\Exception\HttpMethodNotAllowedException;
 use Manager\Exception\HttpNotFoundException;
 use Manager\Exception\MethodNotFoundException;
+use Manager\Exception\RoutingException;
 use Manager\Request\Guard;
 
 class Router
@@ -20,6 +21,16 @@ class Router
     protected $uri;
 
     /**
+     * @var array
+     */
+    protected $routes;
+
+    /**
+     * @var array
+     */
+    protected $route;
+
+    /**
      * ### Sets the formatted request uri
      *
      * Router constructor.
@@ -27,6 +38,7 @@ class Router
     public function __construct()
     {
         $this->uri = $this->formatURI($_SERVER['REQUEST_URI']);
+        $this->routes = json_decode(file_get_contents(httpdir() . 'routes.json'), true);
     }
 
     /**
@@ -46,69 +58,162 @@ class Router
     /**
      * ### Searches for the requested route in the route config
      *
-     * @param string $uri
      * @return mixed
      * @throws Exception
      * @throws HttpMethodNotAllowedException
      * @throws HttpNotFoundException
      */
-    public function findRoute($uri)
+    private function findRoute()
     {
-        $parts = explode('/', $uri);
-        pr($parts);
-        die();
+        $request_parts = explode('/', $this->uri);
+        array_shift($request_parts);
 
-        $routes = file_get_contents(httpdir() . 'routes.json');
-        $routes = json_decode($routes);
+        foreach ($this->routes as $route => $data) {
+            $parts = explode('/', $route);
+            array_shift($parts);
 
-        $get = array_key_exists($uri, $routes->GET);
-        $post = array_key_exists($uri, $routes->POST);
+            if (!isset($data['params'])) {
 
-        if ($get && $post) {
-            $allowed = 3;
-        } elseif ($get) {
-            $allowed = 1;
-        } elseif ($post) {
-            $allowed = 2;
-        } else {
-            throw new HttpNotFoundException;
+                // ### No route parameters configured
+
+                if ($this->checkWithoutParams()) {
+
+                    // ### Found the route :)
+
+                    $this->routes[$this->uri]['uri'] = $this->uri;
+                    $this->routes[$this->uri]['pattern'] = $route;
+                    $this->route = $this->routes[$this->uri];
+                    return $this->route;
+                } else {
+
+                    // ### Route doesn't match, try next one
+
+                    continue;
+                }
+            } else {
+
+                // ### Route parameters are required
+
+                $parts = $this->generateParamRules($data, $parts);
+                if ($this->checkArray($request_parts, $parts)) {
+
+                    // ### Found the route :)
+
+                    $data['uri'] = $this->uri;
+                    $data['pattern'] = $route;
+                    $this->route = $data;
+                    return $this->route;
+                } else {
+
+                    // ### Route doesn't match, try next one
+
+                    continue;
+                }
+            }
         }
 
-        return $this->checkRouteMethod($allowed, $routes, $uri);
+        // ### Couldn't find requested route
+        throw new HttpNotFoundException;
+    }
+
+    /**
+     * ### Checks if requested route (without parameters) exists
+     *
+     * @return bool
+     */
+    private function checkWithoutParams()
+    {
+        return array_key_exists($this->uri, $this->routes);
+    }
+
+    /**
+     * ### Generates the rule set for parameters
+     *
+     * @param array $data
+     * @param array $parts
+     * @return array
+     * @throws RoutingException
+     */
+    private function generateParamRules($data, $parts)
+    {
+        foreach ($data['params'] as $r => $param) {
+            $pos = array_search($r, $parts);
+            if (!$pos) throw new RoutingException('Configured parameter not in route pattern.');
+
+            $parts[$pos] = 'type:' . $data['params'][$parts[$pos]];
+        }
+
+        return $parts;
+    }
+
+    /**
+     * ### Checks if the array fits the rule set
+     *
+     * @param array $check
+     * @param array $rules
+     * @return bool
+     * @throws RoutingException
+     */
+    private function checkArray($check, $rules)
+    {
+        $datatypes = [
+            'integer' => 'num',
+            'string' => 'str'
+        ];
+        $passed = 0;
+
+        foreach ($rules as $key => $rule) {
+            if (substr($rule, 0, 5) === 'type:') {
+                $type = substr($rule, 5);
+                if (!array_key_exists($type, $datatypes)) {
+                    throw new RoutingException('Invalid datatype set in route configuration.');
+                }
+                if (!isset($check[$key])) continue;
+                $try = $this->{$datatypes[$type]}($check[$key]);
+
+                if ($try) $passed++;
+            } else {
+                if (!isset($check[$key])) continue;
+                if ($rules[$key] === $check[$key]) $passed++;
+            }
+        }
+        return $passed === count($rules);
+    }
+
+    /**
+     * ### Alias function for array checker
+     * ### Checks if given value is numeric
+     *
+     * @param $val
+     * @return bool
+     */
+    private function num($val)
+    {
+        return is_numeric($val);
+    }
+
+    /**
+     * ### Alias function for array checker
+     * ### Checks if given value is a string
+     *
+     * @param $val
+     * @return bool
+     */
+    private function str($val)
+    {
+        return is_string($val);
     }
 
     /**
      * ### Checks and verifies the used and allowed route methods
      *
-     * @param int $allowed
-     * @param mixed $routes
-     * @param string $uri
-     * @return string
-     * @throws Exception
+     * @return void
      * @throws HttpMethodNotAllowedException
      */
-    private function checkRouteMethod($allowed, $routes, $uri)
+    private function verifyMethod()
     {
         $method = $_SERVER['REQUEST_METHOD'];
-
-        if ($method === 'GET') {
-            if ($allowed === 3 || $allowed === 1) {
-                return $routes->GET->$uri->controller;
-            } else {
-                throw new HttpMethodNotAllowedException;
-            }
-        } elseif ($method === 'POST') {
-            if ($allowed === 3 || $allowed === 2) {
-
-                if (!Guard::verifyCSRF()) {
-                    throw new Exception('CSRF-Token missing or invalid');
-                }
-
-                return $routes->POST->$uri->controller;
-            } else {
-                throw new HttpMethodNotAllowedException;
-            }
-        } else {
+        if ($method !== $this->route['method']) {
             throw new HttpMethodNotAllowedException;
         }
     }
@@ -125,8 +230,10 @@ class Router
      */
     public function route()
     {
-        $route = $this->findRoute($this->uri);
-        $data = $this->explodeRoute($route);
+        $this->findRoute();
+        $this->verifyMethod();
+
+        $data = $this->explodeRoute($this->route['controller']);
         $class = 'Manager\Http\Controllers\\' . $data[0];
 
         if (!class_exists($class)) {
@@ -151,5 +258,30 @@ class Router
     {
         $explode = explode(':', $str);
         return $explode;
+    }
+
+    /**
+     * ### Gets the route parameter defined in the URI
+     *
+     * @param string $key
+     * @return mixed
+     * @throws RoutingException
+     */
+    public function getRouteParameter($key)
+    {
+        if (!isset($this->route)) throw new RoutingException('No route has been initialized yet.');
+
+        $search = '(' . $key . ')';
+        if (!isset($this->route['params'][$search])) {
+            return null;
+        }
+
+        $parts_p = explode('/', $this->route['pattern']);
+        $parts_u = explode('/', $this->route['uri']);
+        array_shift($parts_p);
+        array_shift($parts_u);
+
+        $id = array_search($search, $parts_p);
+        return $parts_u[$id];
     }
 }

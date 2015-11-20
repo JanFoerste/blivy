@@ -27,4 +27,9 @@ class Input
     {
         return $_POST;
     }
+
+    public static function route($name)
+    {
+        return $_SESSION['router']->getRouteParameter($name);
+    }
 }

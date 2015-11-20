@@ -83,3 +83,8 @@ function decimalConvert($val)
     if ($val < 10) return '0' . $val;
     return $val;
 }
+
+function input_r($name)
+{
+    return \Manager\Request\Input::route($name);
+}

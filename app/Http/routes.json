@@ -1,26 +1,16 @@
 {
-  "GET": {
-    "/" : {
-
-    },
-    "user" : {
-
-    },
-
-
-    "/": {
-      "controller": "PageController:home",
-      "name": "index"
-    },
-    "/user/(id)": {
-      "controller": "PageController:user",
-      "name": "user",
-      "param": "id:integer"
-    }
+  "/home": {
+    "method": "GET",
+    "controller": "PageController:home",
+    "name": "index"
   },
-  "POST": {
-    "/post": {
-      "controller": "PageController:home"
+  "/user/(id)/(option)": {
+    "method": "GET",
+    "controller": "PageController:home",
+    "name": "user",
+    "params": {
+      "(id)": "integer",
+      "(option)": "string"
     }
   }
 }
