@@ -8,6 +8,13 @@ namespace Manager\Support;
 
 class Config
 {
+    /**
+     * ### Tries to find a configuration item
+     *
+     * @param string $from
+     * @param string $item
+     * @return mixed
+     */
     public static function get($from, $item)
     {
         $conf = include(conf($from));
@@ -17,6 +24,13 @@ class Config
         return $conf[$item];
     }
 
+    /**
+     * ### Tries to find a three-dimensional array value
+     *
+     * @param string $conf
+     * @param string $item
+     * @return null
+     */
     private static function tryDot($conf, $item)
     {
         if (strpos($item, '.') < 0) return null;

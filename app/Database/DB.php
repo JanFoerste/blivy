@@ -14,6 +14,11 @@ class DB
      */
     private static $_instance = null;
 
+    /**
+     * ### Creates a new DB instance
+     *
+     * DB constructor.
+     */
     public function __construct()
     {
         self::$_instance = $this->connect();
@@ -21,6 +26,8 @@ class DB
     }
 
     /**
+     * ### Creates new instance if not already set
+     *
      * @return \PDO
      */
     public static function getInstance()
@@ -31,6 +38,12 @@ class DB
         return self::$_instance;
     }
 
+    /**
+     * ### Connects to a database
+     *
+     * @return \PDO
+     * @throws Exception
+     */
     public function connect()
     {
         $host = getenv('DB_HOST');

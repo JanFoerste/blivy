@@ -3,6 +3,12 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
+/**
+ * ### Returns the full path for a template
+ *
+ * @param string $tpl
+ * @return string
+ */
 function templatePath($tpl)
 {
     if (!strpos($tpl, ':')) {

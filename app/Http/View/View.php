@@ -10,10 +10,25 @@ use Manager\Exception\TemplateNotFoundException;
 
 class View
 {
+    /**
+     * @var array
+     */
     protected $properties;
+
+    /**
+     * @var string
+     */
     protected $tpl;
+
+    /**
+     * @var string
+     */
     protected $tpl_path;
 
+    /**
+     * View constructor.
+     * @param $tpl
+     */
     public function __construct($tpl)
     {
         $this->tpl = $tpl;
@@ -23,6 +38,12 @@ class View
         return $this;
     }
 
+    /**
+     * ### Renders the template
+     *
+     * @return string
+     * @throws TemplateNotFoundException
+     */
     public function render()
     {
         set_error_handler([$this, 'renderErrorHandler']);
@@ -37,11 +58,12 @@ class View
         return ob_get_clean();
     }
 
-    public function startBuffer()
-    {
-        ob_start();
-    }
-
+    /**
+     * ### Renders template and echoes it
+     *
+     * @return string
+     * @throws TemplateNotFoundException
+     */
     public function make()
     {
         $rendered = $this->render();
@@ -49,23 +71,50 @@ class View
         return $rendered;
     }
 
+    /**
+     * ### Includes an extending template
+     *
+     * @param $tpl
+     */
     public function take($tpl)
     {
         $path = templatePath($tpl);
         include $path;
     }
 
+    /**
+     * ### Sets a variable
+     *
+     * @param $k
+     * @param $v
+     * @return $this
+     */
     public function set($k, $v)
     {
         $this->$k = $v;
         return $this;
     }
 
+    /**
+     * ### Gets a set variable
+     *
+     * @param $k
+     * @return mixed
+     */
     public function get($k)
     {
         return $this->$k;
     }
 
+    /**
+     * ### Handles uncaught errors in the templates
+     *
+     * @param $errno
+     * @param $errstr
+     * @param $errfile
+     * @param $errline
+     * @throws TemplateException
+     */
     private function renderErrorHandler($errno, $errstr, $errfile, $errline)
     {
         ob_clean();

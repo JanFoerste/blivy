@@ -7,6 +7,11 @@ namespace Manager\Request;
 
 class Guard
 {
+    /**
+     * ### Verifies the given CSRF-Token against the session token
+     *
+     * @return bool
+     */
     public static function verifyCSRF()
     {
         if (getenv('CSRF_EVERYWHERE')) {

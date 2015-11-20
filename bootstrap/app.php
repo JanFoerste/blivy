@@ -3,10 +3,18 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
+/**
+ * ### Files and classes required before anything else
+ */
+
 require_once __DIR__ . '/../app/helpers.php';
 require_once __DIR__ . '/../app/Http/View/helpers.php';
 require_once __DIR__ . '/../app/Exception/Exception.php';
 require_once __DIR__ . '/../generated-conf/config.php';
+
+/**
+ * ### Import everything in these folders (excluding subfolders)
+ */
 
 $folders = [
     'Exception',
@@ -19,5 +27,8 @@ foreach ($folders as $folder) {
     }
 }
 
+/**
+ * ### Sets up the dotenv system
+ */
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
 $dotenv->load();

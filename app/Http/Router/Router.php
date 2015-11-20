@@ -169,11 +169,13 @@ class Router
                     throw new RoutingException('Invalid datatype set in route configuration.');
                 }
                 if (!isset($check[$key])) continue;
+                if (empty($check[$key])) continue;
                 $try = $this->{$datatypes[$type]}($check[$key]);
 
                 if ($try) $passed++;
             } else {
                 if (!isset($check[$key])) continue;
+                if (empty($check[$key])) continue;
                 if ($rules[$key] === $check[$key]) $passed++;
             }
         }

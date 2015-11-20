@@ -9,6 +9,9 @@ use Manager\Http\Router\Router;
 
 class Request
 {
+    /**
+     * Request constructor.
+     */
     public function __construct()
     {
         $this->initSession();
@@ -16,6 +19,10 @@ class Request
         return $_SESSION['router']->route();
     }
 
+    /**
+     * ### Initialises a session, sets the cookie parameters
+     * ### and generates a CSRF-Token
+     */
     private function initSession()
     {
         ini_set('session.cookie_lifetime', 60 * getenv('SESSION_LIFETIME'));
