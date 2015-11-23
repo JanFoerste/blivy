@@ -8,10 +8,13 @@ php:
 before_script:
   - composer self-update
   - composer install --no-interaction
+  - vendor/bin/propel sql:build --overwrite
+  - vendor/bin/propel model:build
 script: php -q public/index.php
 matrix:
   allow_failures:
     - php: hhvm
+    - php: nightly
   fast_finish: true
 notifications:
     on_success: never
