@@ -1,5 +1,23 @@
 {
+  "name": "JanFoerste/blivy",
+  "description": "Blivy PHP-Framework",
+  "keywords": [
+    "framework",
+    "blivy"
+  ],
+  "license": "Apache",
+  "homepage": "http://dev.janfoerste.de",
+  "support": {
+    "issues": "https://github.com/JanFoerste/blivy/issues"
+  },
+  "authors": [
+    {
+      "name": "Jan-Ole Foerste",
+      "email": "me@janfoerste.de"
+    }
+  ],
   "require": {
+    "php": ">=5.4",
     "filp/whoops": "1.*",
     "vlucas/phpdotenv": "^2.1",
     "propel/propel": "~2.0@dev",
