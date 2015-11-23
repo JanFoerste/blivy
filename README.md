@@ -1,5 +1,9 @@
-# Blivy Framework
+# Blivy PHP-Framework [WIP]
 
-This is WIP, do not use this for production yet.
+[![Build Status](https://travis-ci.org/JanFoerste/blivy.svg?branch=master)](https://travis-ci.org/JanFoerste/blivy)
 
-Basically just a small PHP framework. Wiki will follow.
+#### This is still WIP. Do not use this in production!
+
+This is a basic php web-framework containing different classes to make your websites faster and easier to manager.
+
+A wiki will follow.
