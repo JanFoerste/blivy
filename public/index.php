@@ -8,14 +8,14 @@
  */
 
 /**
- * ### Loads the composer autoloader
+ * ### Autoload files
  */
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../bootstrap/autoload.php';
 
 /**
  * ### Load other requirements
  */
-require __DIR__ . '/../bootstrap/app.php';
+require_once __DIR__ . '/../bootstrap/app.php';
 
 /**
  * ### Start the request
