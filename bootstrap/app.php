@@ -10,7 +10,7 @@
 require_once __DIR__ . '/../app/helpers.php';
 require_once __DIR__ . '/../app/Http/View/helpers.php';
 require_once __DIR__ . '/../app/Exception/Exception.php';
-require_once __DIR__ . '/../generated-conf/config.php';
+//require_once __DIR__ . '/../generated-conf/config.php';
 
 /**
  * ### Import everything in these folders (excluding subfolders)
