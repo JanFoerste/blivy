@@ -8,8 +8,8 @@ php:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - vendor/bin/propel sql:build --overwrite
-  - vendor/bin/propel model:build
+  #- vendor/bin/propel sql:build --overwrite
+  #- vendor/bin/propel model:build
 script: php -q public/index.php
 matrix:
   allow_failures:
