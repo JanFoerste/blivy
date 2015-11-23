@@ -1,0 +1,9 @@
+[2015-11-23 10:38:27] default.ERROR: The requested route does not exist! in C:\xampp\htdocs\blivy\app\Http\Router\Router.php:106
+Backtrace: 
+#0: C:\xampp\htdocs\blivy\app\Exception\Exception.php(26)Manager\Exception\Exception->generateBacktrace()
+#1: C:\xampp\htdocs\blivy\app\Exception\HttpNotFoundException.php(15)Manager\Exception\Exception->__construct()
+#2: C:\xampp\htdocs\blivy\app\Http\Router\Router.php(106)Manager\Exception\HttpNotFoundException->__construct()
+#3: C:\xampp\htdocs\blivy\app\Http\Router\Router.php(225)Manager\Http\Router\Router->findRoute()
+#4: C:\xampp\htdocs\blivy\app\Request\Request.php(19)Manager\Http\Router\Router->route()
+#5: C:\xampp\htdocs\blivy\public\index.php(24)Manager\Request\Request->__construct()
+  

@@ -1,5 +1,5 @@
 {
-  "/home": {
+  "/": {
     "method": "GET",
     "controller": "PageController:home",
     "name": "index"

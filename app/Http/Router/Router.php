@@ -37,7 +37,11 @@ class Router
      */
     public function __construct()
     {
-        $this->uri = $this->formatURI($_SERVER['REQUEST_URI']);
+        // ### @TODO: Set input parameter instead of /
+        $request = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+        $_SESSION['REQUEST_URI'] = $request;
+
+        $this->uri = $this->formatURI($request);
         $this->routes = json_decode(file_get_contents(httpdir() . 'routes.json'), true);
     }
 
@@ -204,7 +208,7 @@ class Router
      */
     private function verifyMethod()
     {
-        $method = $_SERVER['REQUEST_METHOD'];
+        $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
         if ($method !== $this->route['method']) {
             throw new HttpMethodNotAllowedException;
         }
