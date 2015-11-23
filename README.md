@@ -6,4 +6,4 @@
 
 This is a basic php web-framework containing different classes to make your websites faster and easier to manage.
 
-A wiki will follow.
+[Click here for the documentation](https://github.com/JanFoerste/blivy/wiki)
