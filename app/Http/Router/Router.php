@@ -217,7 +217,7 @@ class Router
     /**
      * ### Does the actual routing and runs the requested method
      *
-     * @return mixed
+     * @return $this
      * @throws ClassNotFoundException
      * @throws Exception
      * @throws HttpMethodNotAllowedException
@@ -241,7 +241,8 @@ class Router
             throw new MethodNotFoundException($class . ':' . $data[1]);
         }
 
-        return $init->$data[1]();
+        $init->$data[1]();
+        return $this;
     }
 
     /**

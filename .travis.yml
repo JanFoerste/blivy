@@ -15,6 +15,7 @@ script: php -q public/index.php
 matrix:
   allow_failures:
     - php: hhvm
+    - php: 7
   fast_finish: true
 notifications:
     on_success: never
