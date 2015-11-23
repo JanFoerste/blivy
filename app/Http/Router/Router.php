@@ -241,7 +241,7 @@ class Router
             throw new MethodNotFoundException($class . ':' . $data[1]);
         }
 
-        $init->$data[1]();
+        $init->{$data[1]}();
         return $this;
     }
 
