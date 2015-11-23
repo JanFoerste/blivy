@@ -5,6 +5,7 @@
 
 namespace Manager\Exception;
 
+use Manager\Support\Config;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -25,7 +26,7 @@ class Exception extends \Exception
         $txt = $message . ' in ' . parent::getFile() . ':' . parent::getLine() . "\n" . $this->generateBacktrace();
         $this->exceptionLog($txt);
 
-        if (conf('app.debug') == 1) {
+        if (Config::get('app', 'debug') == 1) {
             $this->setErrorTraits($traits);
         } else {
             die('Whoops, looks like we encountered an error!');
