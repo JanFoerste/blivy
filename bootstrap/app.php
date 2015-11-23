@@ -4,28 +4,19 @@
  */
 
 /**
- * ### Files and classes required before anything else
+ * ### Basic helper functions globally available
  */
-
 require_once __DIR__ . '/../app/helpers.php';
-require_once __DIR__ . '/../app/Http/View/helpers.php';
-require_once __DIR__ . '/../app/Exception/Exception.php';
-if (file_exists(__DIR__ . '/../generated-conf/config.php')) require_once __DIR__ . '/../generated-conf/config.php';
 
 /**
- * ### Import everything in these folders (excluding subfolders)
+ * ### Helpers to be used in the view classes and templates
  */
+require_once __DIR__ . '/../app/Http/View/helpers.php';
 
-$folders = [
-    'Exception',
-    'Auth',
-];
-
-foreach ($folders as $folder) {
-    foreach (glob(__DIR__ . '/../app/' . $folder . '/*.php') as $filename) {
-        require_once $filename;
-    }
-}
+/**
+ * ### Set up the ORM if config exists
+ */
+if (file_exists(__DIR__ . '/../generated-conf/config.php')) require_once __DIR__ . '/../generated-conf/config.php';
 
 /**
  * ### Sets up the dotenv system
