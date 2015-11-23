@@ -5,7 +5,7 @@
 
 namespace Manager\Exception;
 
-
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Whoops\Handler\PrettyPageHandler;
@@ -22,8 +22,10 @@ class Exception extends \Exception
     {
         parent::__construct($message, $code, $previous);
         $this->registerLogging();
-        $this->log($message, parent::getFile(), parent::getLine());
-        if (conf('app.debug')) {
+        $txt = $message . ' in ' . parent::getFile() . ':' . parent::getLine() . "\n" . $this->generateBacktrace();
+        $this->exceptionLog($txt);
+
+        if (conf('app.debug') == 1) {
             $this->setErrorTraits($traits);
         } else {
             die('Whoops, looks like we encountered an error!');
@@ -42,12 +44,33 @@ class Exception extends \Exception
 
     public function registerLogging()
     {
+        $formatter = new LineFormatter(null, null, true, true);
+        $stream = new StreamHandler(logdir() . 'error.log', Logger::ERROR);
+        $stream->setFormatter($formatter);
+
         $this->log = new Logger('default');
-        $this->log->pushHandler(new StreamHandler(logdir() . 'error.log', Logger::ERROR));
+        $this->log->pushHandler($stream);
     }
 
-    public function log($msg, $file, $line)
+    public function exceptionLog($msg)
     {
-        $this->log->addError($msg, [$file => $line]);
+        $this->log->addError($msg);
+    }
+
+    public function generateBacktrace()
+    {
+        $trace = debug_backtrace(0);
+        $str = "Backtrace: \n";
+        foreach ($trace as $key => $item) {
+            $append = '#' . $key . ': ';
+            $file = $item['file'] . '(' . $item['line'] . ')';
+            $class = isset($item['class']) ? $item['class'] : '';
+            $args = count($item['args']) > 0 ? '' : implode(', ', $item['args']);
+            $func = '->' . $item['function'] . '(' . $args . ')';
+
+            $str = $str . $append . $file . $class . $args . $func . "\n";
+        }
+
+        return $str;
     }
 }

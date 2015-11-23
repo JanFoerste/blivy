@@ -16,7 +16,7 @@ class Request
     {
         $this->initSession();
         $_SESSION['router'] = new Router();
-        return $_SESSION['router']->route();
+        $_SESSION['router']->route();
     }
 
     /**

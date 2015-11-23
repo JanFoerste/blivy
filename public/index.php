@@ -20,4 +20,5 @@ require __DIR__ . '/../bootstrap/app.php';
 /**
  * ### Start the request
  */
+
 new \Manager\Request\Request();
