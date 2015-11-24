@@ -3,9 +3,9 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Http\Controllers;
+namespace Blivy\Http\Controllers;
 
-use Manager\Http\View\View;
+use Blivy\Http\View\View;
 
 class PageController
 {

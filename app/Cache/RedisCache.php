@@ -3,10 +3,10 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Cache;
+namespace Blivy\Cache;
 
-use Manager\Exception\RedisException;
-use Manager\Support\Config;
+use Blivy\Exception\RedisException;
+use Blivy\Support\Config;
 use Predis\Client;
 
 /**
@@ -81,6 +81,17 @@ class RedisCache
     {
         $prefix = Config::get('cache', 'key_prefix');
         return unserialize($this->conn->get($prefix . $key));
+    }
+
+    /**
+     * ### Removes a key/value pair
+     *
+     * @param string $key
+     * @return int
+     */
+    public function remove($key)
+    {
+        return $this->conn->del($key);
     }
 
     /**

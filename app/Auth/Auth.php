@@ -3,7 +3,7 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Auth;
+namespace Blivy\Auth;
 
 /**
  * ### Base authentication functions

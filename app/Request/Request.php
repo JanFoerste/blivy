@@ -1,7 +1,7 @@
 <?php
 
-namespace Manager\Request;
-use Manager\Http\Router\Router;
+namespace Blivy\Request;
+use Blivy\Http\Router\Router;
 
 /**
  * @author Jan Foerste <me@janfoerste.de>

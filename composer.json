@@ -34,7 +34,7 @@
       "app/Database"
     ],
     "psr-4": {
-      "Manager\\": "app/"
+      "Blivy\\": "app/"
     }
   }
 }

@@ -3,7 +3,7 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Cache;
+namespace Blivy\Cache;
 
 /**
  * ### Cache handler. Can currently choose between redis and file caching
@@ -79,6 +79,23 @@ class Cache
     public static function get($key)
     {
         return self::driver()->get($key);
+    }
+
+    /**
+     * ### Checks if the value exists
+     *
+     * @param $key
+     * @return bool|int
+     */
+    public static function exists($key)
+    {
+        return self::driver()->exists($key);
+    }
+
+    public static function remove($key)
+    {
+        if (!self::exists($key)) return true;
+        return self::driver()->remove($key);
     }
 
     /**

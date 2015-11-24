@@ -8,3 +8,4 @@ generated-*/
 .env
 propel.yml
 /bootstrap/cache/file/*
+/storage/log/error.log

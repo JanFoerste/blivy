@@ -3,9 +3,9 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Exception;
+namespace Blivy\Exception;
 
-use Manager\Support\Config;
+use Blivy\Support\Config;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;

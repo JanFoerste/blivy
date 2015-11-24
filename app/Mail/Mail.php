@@ -3,11 +3,11 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Mail;
+namespace Blivy\Mail;
 
 
-use Manager\Exception\MailException;
-use Manager\Support\Config;
+use Blivy\Exception\MailException;
+use Blivy\Support\Config;
 
 class Mail
 {

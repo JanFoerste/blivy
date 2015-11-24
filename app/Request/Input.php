@@ -3,7 +3,7 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Request;
+namespace Blivy\Request;
 
 class Input
 {

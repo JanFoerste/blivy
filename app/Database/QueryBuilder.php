@@ -3,10 +3,10 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Database;
+namespace Blivy\Database;
 
 
-use Manager\Exception\QueryBuilderException;
+use Blivy\Exception\QueryBuilderException;
 
 class QueryBuilder extends DB
 {

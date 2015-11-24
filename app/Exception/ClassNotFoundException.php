@@ -3,7 +3,7 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Exception;
+namespace Blivy\Exception;
 
 
 class ClassNotFoundException extends Exception
