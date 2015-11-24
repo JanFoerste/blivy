@@ -3,10 +3,10 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Cache;
+namespace Blivy\Cache;
 
-use Manager\Exception\RedisException;
-use Manager\Support\Config;
+use Blivy\Exception\RedisException;
+use Blivy\Support\Config;
 use Predis\Client;
 
 /**

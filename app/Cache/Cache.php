@@ -3,7 +3,7 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Cache;
+namespace Blivy\Cache;
 
 /**
  * ### Cache handler. Can currently choose between redis and file caching

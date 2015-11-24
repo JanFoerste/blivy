@@ -3,11 +3,11 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Cache;
+namespace Blivy\Cache;
 
 
-use Manager\Exception\Exception;
-use Manager\Support\Config;
+use Blivy\Exception\Exception;
+use Blivy\Support\Config;
 
 /**
  * ### File caching driver

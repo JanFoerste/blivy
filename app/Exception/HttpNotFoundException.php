@@ -3,9 +3,9 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Exception;
+namespace Blivy\Exception;
 
-use Manager\Http\Router\Router;
+use Blivy\Http\Router\Router;
 
 class HttpNotFoundException extends Exception
 {

@@ -3,7 +3,7 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Support;
+namespace Blivy\Support;
 
 
 class Config

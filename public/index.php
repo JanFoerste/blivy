@@ -21,4 +21,4 @@ require_once __DIR__ . '/../bootstrap/app.php';
  * ### Start the request
  */
 
-new \Manager\Request\Request();
+new \Blivy\Request\Request();

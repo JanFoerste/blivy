@@ -3,10 +3,10 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Http\View;
+namespace Blivy\Http\View;
 
-use Manager\Exception\TemplateException;
-use Manager\Exception\TemplateNotFoundException;
+use Blivy\Exception\TemplateException;
+use Blivy\Exception\TemplateNotFoundException;
 
 class View
 {

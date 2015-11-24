@@ -3,9 +3,9 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Database;
+namespace Blivy\Database;
 
-use Manager\Exception\Exception;
+use Blivy\Exception\Exception;
 
 class DB
 {

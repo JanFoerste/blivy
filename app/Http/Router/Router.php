@@ -3,15 +3,16 @@
  * @author Jan Foerste <me@janfoerste.de>
  */
 
-namespace Manager\Http\Router;
+namespace Blivy\Http\Router;
 
-use Manager\Exception\ClassNotFoundException;
-use Manager\Exception\Exception;
-use Manager\Exception\HttpMethodNotAllowedException;
-use Manager\Exception\HttpNotFoundException;
-use Manager\Exception\MethodNotFoundException;
-use Manager\Exception\RoutingException;
-use Manager\Request\Guard;
+use Blivy\Exception\ClassNotFoundException;
+use Blivy\Exception\CSRFTokenException;
+use Blivy\Exception\Exception;
+use Blivy\Exception\HttpMethodNotAllowedException;
+use Blivy\Exception\HttpNotFoundException;
+use Blivy\Exception\MethodNotFoundException;
+use Blivy\Exception\RoutingException;
+use Blivy\Request\Guard;
 
 class Router
 {
@@ -205,6 +206,7 @@ class Router
      *
      * @return void
      * @throws HttpMethodNotAllowedException
+     * @throws CSRFTokenException
      */
     private function verifyMethod()
     {
@@ -212,6 +214,10 @@ class Router
         if ($method !== $this->route['method']) {
             throw new HttpMethodNotAllowedException;
         }
+
+        if ($method === 'POST') {
+            if (!Guard::verifyCSRF()) throw new CSRFTokenException;
+        };
     }
 
     /**
@@ -230,7 +236,7 @@ class Router
         $this->verifyMethod();
 
         $data = $this->explodeRoute($this->route['controller']);
-        $class = 'Manager\Http\Controllers\\' . $data[0];
+        $class = 'Blivy\Http\Controllers\\' . $data[0];
 
         if (!class_exists($class)) {
             throw new ClassNotFoundException($class);
