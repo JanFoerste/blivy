@@ -84,6 +84,17 @@ class RedisCache
     }
 
     /**
+     * ### Removes a key/value pair
+     *
+     * @param string $key
+     * @return int
+     */
+    public function remove($key)
+    {
+        return $this->conn->del($key);
+    }
+
+    /**
      * ### Deletes the redis cache
      *
      * @return bool

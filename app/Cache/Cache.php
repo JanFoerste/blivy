@@ -82,6 +82,23 @@ class Cache
     }
 
     /**
+     * ### Checks if the value exists
+     *
+     * @param $key
+     * @return bool|int
+     */
+    public static function exists($key)
+    {
+        return self::driver()->exists($key);
+    }
+
+    public static function remove($key)
+    {
+        if (!self::exists($key)) return true;
+        return self::driver()->remove($key);
+    }
+
+    /**
      * ### Flushes the current cache driver (Removes all key/value pairs)
      *
      * @return bool

@@ -178,6 +178,35 @@ class FileCache
     }
 
     /**
+     * ### Removes a key from the map
+     *
+     * @param string $key
+     */
+    private function removeFromMap($key)
+    {
+        $map = json_decode(file_get_contents(filecachedir() . 'cachemap'));
+        unset($map->$key);
+        file_put_contents(filecachedir() . 'cachemap', json_encode($map));
+    }
+
+    /**
+     * ### Removes a key/value pair form the cache
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function remove($key)
+    {
+        $file = $this->searchInMap($key);
+        if (!$file) return true;
+        $content = json_decode(file_get_contents($file));
+        unset($content->$key);
+        file_put_contents($file, json_encode($content));
+        $this->removeFromMap($key);
+        return true;
+    }
+
+    /**
      * ### Flushes the map and removes all cache files
      *
      * @return bool
