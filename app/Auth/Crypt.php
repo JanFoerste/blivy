@@ -9,10 +9,12 @@ namespace Blivy\Auth;
  * ### En- and decryption as well as hashing is done here
  *
  * Class Crypt
- * @package Manager\Auth
+ * @package Blivy\Auth
  */
 class Crypt
 {
+    protected static $rounds = 10;
+
     /**
      * ### Hashes the given value. Used for storing passwords
      *
@@ -21,7 +23,19 @@ class Crypt
      */
     public static function hash($value)
     {
-        return password_hash($value, PASSWORD_BCRYPT);
+        return password_hash($value, PASSWORD_BCRYPT, ['cost' => self::$rounds]);
+    }
+
+    /**
+     * ### Verifies the given password against the hash
+     *
+     * @param $password
+     * @param $hash
+     * @return bool
+     */
+    public static function verify($password, $hash)
+    {
+        return password_verify($password, $hash);
     }
 
     /**

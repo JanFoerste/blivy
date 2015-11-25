@@ -1,12 +1,13 @@
 <?php
 
 namespace Blivy\Request;
+
 use Blivy\Http\Router\Router;
+use Blivy\Support\Config;
 
 /**
  * @author Jan Foerste <me@janfoerste.de>
  */
-
 class Request
 {
     /**
@@ -25,12 +26,14 @@ class Request
      */
     private function initSession()
     {
-        ini_set('session.cookie_lifetime', 60 * getenv('SESSION_LIFETIME'));
-        session_set_cookie_params(60 * getenv('SESSION_LIFETIME'), '/', '.' . getenv('HOSTNAME'), false);
+        $lifetime = 60 * Config::get('auth', 'session_lifetime');
+
+        ini_set('session.cookie_lifetime', $lifetime);
+        session_set_cookie_params($lifetime, '/', '.' . getenv('HOSTNAME'), false);
         session_start();
 
         if (!isset($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = hash("sha512",mt_rand(0,mt_getrandmax()));
+            $_SESSION['csrf_token'] = hash("sha512", mt_rand(0, mt_getrandmax()));
         }
     }
 

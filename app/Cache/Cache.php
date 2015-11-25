@@ -5,6 +5,8 @@
 
 namespace Blivy\Cache;
 
+use Blivy\Support\Config;
+
 /**
  * ### Cache handler. Can currently choose between redis and file caching
  *
@@ -21,7 +23,7 @@ class Cache
     /**
      * ### Creates a new driver instance
      *
-     * @return FileCache|RedisCache|null
+     * @return FileCacheProvider|FileCacheProvider|null
      */
     private static function driver()
     {
@@ -31,18 +33,9 @@ class Cache
             $driver = self::$driver;
         }
 
-        switch ($driver) {
-            case 'file':
-                $class = new FileCache();
-                break;
-            case 'redis':
-                $class = new RedisCache();
-                break;
-            default:
-                $class = null;
-        }
+        $class = Config::get('cache', 'providers.' . $driver . '.class');
+        $class = new $class();
 
-        self::$driver = null;
         return $class;
     }
 
@@ -94,7 +87,6 @@ class Cache
 
     public static function remove($key)
     {
-        if (!self::exists($key)) return true;
         return self::driver()->remove($key);
     }
 

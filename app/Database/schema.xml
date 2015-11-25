@@ -18,7 +18,7 @@
    [TIP]: You can define several schemas for a single project. Just make sure that each of the schema
           filenames end with schema.xml.
 -->
-<database name="manager" defaultIdMethod="native"
+<database name="blivy" defaultIdMethod="native"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="Models"
