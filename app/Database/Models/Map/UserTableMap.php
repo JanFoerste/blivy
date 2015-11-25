@@ -39,7 +39,7 @@ class UserTableMap extends TableMap
     /**
      * The default database name for this class
      */
-    const DATABASE_NAME = 'manager';
+    const DATABASE_NAME = 'blivy';
 
     /**
      * The table name for this class

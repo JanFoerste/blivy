@@ -1,0 +1,24 @@
+[2015-11-25 09:37:33] default.ERROR: Connection to redis server failed. Please check your settings. in C:\xampp\htdocs\blivy\app\Cache\RedisCacheProvider.php:42
+Backtrace: 
+#0: C:\xampp\htdocs\blivy\app\Exception\Exception.php(26)Blivy\Exception\Exception->generateBacktrace()
+#1: C:\xampp\htdocs\blivy\app\Exception\RedisException.php(13)Blivy\Exception\Exception->__construct()
+#2: C:\xampp\htdocs\blivy\app\Cache\RedisCacheProvider.php(42)Blivy\Exception\RedisException->__construct()
+#3: C:\xampp\htdocs\blivy\app\Cache\Cache.php(36)Blivy\Cache\RedisCacheProvider->__construct()
+#4: C:\xampp\htdocs\blivy\app\Cache\Cache.php(73)Blivy\Cache\Cache->driver()
+#5: C:\xampp\htdocs\blivy\app\Http\Controllers\PageController.php(15)Blivy\Cache\Cache->get()
+#6: C:\xampp\htdocs\blivy\app\Http\Router\Router.php(250)Blivy\Http\Controllers\PageController->home()
+#7: C:\xampp\htdocs\blivy\app\Request\Request.php(19)Blivy\Http\Router\Router->route()
+#8: C:\xampp\htdocs\blivy\public\index.php(24)Blivy\Request\Request->__construct()
+  
+[2015-11-25 11:56:39] default.ERROR: Connection to redis server failed. Please check your settings. in C:\xampp\htdocs\blivy\app\Cache\RedisCacheProvider.php:42
+Backtrace: 
+#0: C:\xampp\htdocs\blivy\app\Exception\Exception.php(26)Blivy\Exception\Exception->generateBacktrace()
+#1: C:\xampp\htdocs\blivy\app\Exception\RedisException.php(13)Blivy\Exception\Exception->__construct()
+#2: C:\xampp\htdocs\blivy\app\Cache\RedisCacheProvider.php(42)Blivy\Exception\RedisException->__construct()
+#3: C:\xampp\htdocs\blivy\app\Cache\Cache.php(37)Blivy\Cache\RedisCacheProvider->__construct()
+#4: C:\xampp\htdocs\blivy\app\Cache\Cache.php(74)Blivy\Cache\Cache->driver()
+#5: C:\xampp\htdocs\blivy\app\Http\Controllers\PageController.php(15)Blivy\Cache\Cache->get()
+#6: C:\xampp\htdocs\blivy\app\Http\Router\Router.php(250)Blivy\Http\Controllers\PageController->home()
+#7: C:\xampp\htdocs\blivy\app\Request\Request.php(19)Blivy\Http\Router\Router->route()
+#8: C:\xampp\htdocs\blivy\public\index.php(24)Blivy\Request\Request->__construct()
+  

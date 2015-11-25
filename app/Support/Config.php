@@ -37,8 +37,13 @@ class Config
 
         $parts = explode('.', $item);
         if (!isset($conf[$parts[0]])) return null;
-        if (!isset($conf[$parts[0]][$parts[1]])) return null;
 
-        return $conf[$parts[0]][$parts[1]];
+        $base = $conf;
+        foreach ($parts as $part) {
+            if (!isset($base[$part])) return null;
+            $base = $base[$part];
+        }
+
+        return $base;
     }
 }

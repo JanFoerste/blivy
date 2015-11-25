@@ -9,17 +9,17 @@
 propel:
     paths:
         # The directory where Propel expects to find your `schema.xml` file.
-        schemaDir: C:\xampp\htdocs\manager\app\Database
+        schemaDir: C:\xampp\htdocs\blivy\app\Database
 
         # The directory where Propel should output generated object model classes.
-        phpDir: C:\xampp\htdocs\manager\app\Database
+        phpDir: C:\xampp\htdocs\blivy\app\Database
 
 # propel:
 #     database:
 #         connections:
-#             manager:
+#             blivy:
 #                 adapter: mysql
-#                 dsn: mysql:host=localhost;dbname=manager
+#                 dsn: mysql:host=localhost;dbname=blivy
 #                 user:
 #                 password:
 #                 settings:
@@ -27,10 +27,10 @@ propel:
 #                     queries:
 #                       utf8: "SET NAMES utf8 COLLATE utf8_unicode_ci, COLLATION_CONNECTION = utf8_unicode_ci, COLLATION_DATABASE = utf8_unicode_ci, COLLATION_SERVER = utf8_unicode_ci"
 #     runtime:
-#           defaultConnection: manager
+#           defaultConnection: blivy
 #           connections:
-#               - manager
+#               - blivy
 #     generator:
-#           defaultConnection: manager
+#           defaultConnection: blivy
 #           connections:
-#               - manager
+#               - blivy

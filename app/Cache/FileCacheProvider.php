@@ -12,10 +12,10 @@ use Blivy\Support\Config;
 /**
  * ### File caching driver
  *
- * Class FileCache
+ * Class FileCacheProvider
  * @package Manager\Cache
  */
-class FileCache
+class FileCacheProvider
 {
     /**
      * ### Makes sure the map file exists and is writable

@@ -12,10 +12,10 @@ use Predis\Client;
 /**
  * ### The Redis cache driver
  *
- * Class RedisCache
+ * Class RedisCacheProvider
  * @package Manager\Cache
  */
-class RedisCache
+class RedisCacheProvider
 {
     /**
      * @var Client
@@ -31,9 +31,9 @@ class RedisCache
     {
         $client = new Client([
             'scheme' => 'tcp',
-            'host' => Config::get('cache', 'redis_server.host'),
-            'port' => Config::get('cache', 'redis_server.port'),
-            'database' => Config::get('cache', 'redis_server.database')
+            'host' => Config::get('cache', 'providers.redis.server.host'),
+            'port' => Config::get('cache', 'providers.redis.server.port'),
+            'database' => Config::get('cache', 'providers.redis.server.database')
         ]);
 
         try {
@@ -91,6 +91,7 @@ class RedisCache
      */
     public function remove($key)
     {
+        $this->set($key, null, 1);
         return $this->conn->del($key);
     }
 
