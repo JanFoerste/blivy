@@ -1,0 +1,61 @@
+<?php
+/**
+ * @author Jan Foerste <me@janfoerste.de>
+ */
+
+require __DIR__ . '/bootstrap/autoload.php';
+require_once __DIR__ . '/bootstrap/app.php';
+
+array_shift($argv);
+if (!isset($argv[0])) {
+    // ### @TODO: run help command
+    echo 'help';
+    return true;
+}
+
+$params = [];
+foreach ($argv as $argument) {
+    if (substr($argument, 0, 2) == '--') {
+        $argument = substr($argument, 2);
+        if (strpos($argument, '=')) {
+            $pairs = explode('=', $argument);
+        } else {
+            $pairs[0] = $argument;
+            $pairs[1] = true;
+        }
+
+        $params[$pairs[0]] = $pairs[1];
+    }
+}
+
+switch($argv[0]) {
+    case 'queue':
+        queue_work();
+}
+
+function param($name, $default)
+{
+    var_dump(isset($params));
+    if (isset($params[$name])) {
+        echo 'test';
+        return $params[$name];
+    } else {
+        return $default;
+    }
+}
+
+function queue_work()
+{
+    $worker = new \Blivy\Queue\QueueWorker();
+    $try = $worker->tryJob();
+    switch ($try) {
+        case 'retry':
+            $sleep = param('sleep', 3);
+            echo $sleep;
+            sleep($sleep);
+            queue_work();
+            break;
+        case 'fail':
+            echo 'Fail';
+    }
+}

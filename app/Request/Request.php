@@ -27,8 +27,7 @@ class Request
     private function initSession()
     {
         $lifetime = 60 * Config::get('auth', 'session_lifetime');
-        // ### @TODO: change this to config->get
-        $hostname = getenv('HOSTNAME');
+        $hostname = Config::get('app', 'hostname');
         if (filter_var($hostname, FILTER_VALIDATE_IP)) {
             $cookie_host = $hostname;
         } else {
