@@ -27,9 +27,16 @@ class Request
     private function initSession()
     {
         $lifetime = 60 * Config::get('auth', 'session_lifetime');
+        // ### @TODO: change this to config->get
+        $hostname = getenv('HOSTNAME');
+        if (filter_var($hostname, FILTER_VALIDATE_IP)) {
+            $cookie_host = $hostname;
+        } else {
+            $cookie_host = '.' . $hostname;
+        }
 
         ini_set('session.cookie_lifetime', $lifetime);
-        session_set_cookie_params($lifetime, '/', '.' . getenv('HOSTNAME'), false);
+        session_set_cookie_params($lifetime, '/', $cookie_host, false);
         session_start();
 
         if (!isset($_SESSION['csrf_token'])) {
