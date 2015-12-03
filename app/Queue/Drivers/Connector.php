@@ -6,10 +6,17 @@
 namespace Blivy\Queue\Drivers;
 
 
+use Blivy\Support\Config;
+
 class Connector
 {
     public static function get()
     {
-        return new RedisQueueDriver();
+        $driver = Config::get('queue', 'driver');
+
+        $provider = Config::get('queue', 'connections.' . $driver . '.class');
+        $provider = new $provider();
+
+        return $provider;
     }
 }

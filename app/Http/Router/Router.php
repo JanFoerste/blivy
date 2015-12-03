@@ -38,7 +38,6 @@ class Router
      */
     public function __construct()
     {
-        // ### @TODO: Set input parameter instead of /
         $request = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
         $_SESSION['REQUEST_URI'] = $request;
 

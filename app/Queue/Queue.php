@@ -10,28 +10,34 @@ use Blivy\Queue\Drivers\Connector;
 
 abstract class Queue
 {
-    public $store;
+    /**
+     * @var int
+     */
     public $tries;
+    /**
+     * @var string
+     */
     public $created_at;
 
+    /**
+     * Queue constructor.
+     * ### Set basic parameters
+     */
     public function __construct()
     {
         $now = new \DateTime();
         $this->created_at = $now->format('Y-m-d H:i:s');
         $this->tries = 0;
 
-        $this->store = $this->serialize();
         $this->storeJob();
     }
 
-    public function serialize()
-    {
-        return serialize($this);
-    }
-
+    /**
+     * ### Store the job in the driver
+     */
     private function storeJob()
     {
         $driver = Connector::get();
-        $driver->addToQueue($this->store);
+        $driver->addToQueue(serialize($this));
     }
 }

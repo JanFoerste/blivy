@@ -28,7 +28,7 @@ class Cache
     private static function driver()
     {
         if (!isset(self::$driver)) {
-            $driver = env('CACHE_DRIVER', 'file');
+            $driver = Config::get('cache', 'driver');
         } else {
             $driver = self::$driver;
         }

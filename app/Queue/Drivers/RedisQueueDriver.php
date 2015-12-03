@@ -17,6 +17,10 @@ class RedisQueueDriver
      */
     protected $connection;
 
+    /**
+     * RedisQueueDriver constructor.
+     * ### Set up connection
+     */
     public function __construct()
     {
         $client = new Client([
@@ -35,26 +39,42 @@ class RedisQueueDriver
         $this->connection = $client;
     }
 
+    /**
+     * ### Pushes a new job to the queue
+     *
+     * @param $value
+     * @return bool
+     */
     public function addToQueue($value)
     {
         $prefix = Config::get('queue', 'key_prefix');
         $now = new \DateTime();
-        $key = $prefix . $now->format('Y-m-d_H:i:s');
+        $key = $prefix . $now->format('Y-m-d_H:i:s') . microtime();
         $this->connection->set($key, $value);
         return true;
     }
 
+    /**
+     * ### Gets the next queue entry
+     *
+     * @return array|null
+     */
     public function getNextJob()
     {
         $prefix = Config::get('queue', 'key_prefix');
         $all = $this->connection->keys($prefix . '*');
-        if(count($all) < 1) {
+        if (count($all) < 1) {
             return null;
         }
         $first = $this->connection->get($all[0]);
         return [$all[0], $first];
     }
 
+    /**
+     * ### Returns all failed jobs
+     *
+     * @return array
+     */
     public function getFailedJobs()
     {
         $prefix = Config::get('queue', 'failed_prefix');
@@ -62,26 +82,50 @@ class RedisQueueDriver
         return $all;
     }
 
-    public function failJob($key)
+    /**
+     * ### Pushes a job to the failed array
+     *
+     * @param $job
+     */
+    public function failJob($job)
     {
         $prefix = Config::get('queue', 'failed_prefix');
         $now = new \DateTime();
-        $id = $prefix . $now->format('Y-m-d_H:i:s');
+        $id = $prefix . $now->format('Y-m-d_H:i:s') . microtime();
 
-        $job = $this->connection->get($key);
-        $this->connection->del($key);
         $this->connection->set($id, $job);
     }
 
+    /**
+     * ### Increments the fail iterator
+     *
+     * @param $key
+     * @param $job
+     */
     public function addFail($key, $job)
     {
         $job->tries++;
         $this->connection->set($key, serialize($job));
     }
 
+    /**
+     * ### Deletes a job
+     *
+     * @param $key
+     */
     public function del($key)
     {
         $this->connection->del($key);
     }
 
+    /**
+     * ### Gets a job
+     *
+     * @param $key
+     * @return string
+     */
+    public function get($key)
+    {
+        return $this->connection->get($key);
+    }
 }

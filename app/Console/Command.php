@@ -5,18 +5,63 @@
 
 namespace Blivy\Console;
 
+use Blivy\Support\Config;
 
 class Command
 {
+    /**
+     * @var array
+     */
     protected $parameters = [];
 
+    /**
+     * Command constructor.
+     * ### Sets input parameters
+     */
     public function __construct()
     {
         global $argv;
         $this->setParameters($argv);
-        pr($this->parameters);
     }
 
+    /**
+     * ### Handles the command
+     */
+    public function handle()
+    {
+        $this->routeCommand();
+    }
+
+    /**
+     * ### Runs the requested command
+     *
+     * @return mixed
+     */
+    private function routeCommand()
+    {
+        if (!isset($this->parameters['commands'][0])) {
+            $help = new Help();
+            $help->handle();
+            die();
+        }
+
+        $cmd = $this->parameters['commands'][0];
+        $commands = Config::get('console', 'commands');
+
+        if (!array_key_exists($cmd, $commands)) {
+            die('Command "' . $cmd . '" does not exist or is not configured properly.');
+        }
+        $class = $commands[$cmd]['class'];
+
+        $run = new $class();
+        return $run->handle();
+    }
+
+    /**
+     * ### Sets up the parameter array
+     *
+     * @param $argv
+     */
     private function setParameters($argv)
     {
         array_shift($argv);
@@ -41,8 +86,42 @@ class Command
         $this->parameters['options'] = $options;
     }
 
-    protected function getParameters()
+    /**
+     * ### Gets an input parameter
+     *
+     * @param $str
+     * @return null
+     */
+    protected function getParameter($str)
     {
-        return $this->parameters;
+        if (isset($this->parameters['options']) && isset($this->parameters['options'][$str])) {
+            return $this->parameters['options'][$str];
+        } else {
+            return null;
+        }
+    }
+}
+
+class Help
+{
+    /**
+     * ### Prints the help
+     */
+    public function handle()
+    {
+        echo "Welcome to the Blivy command line interface.\n";
+        echo "This tool can handle pre-installed and custom commands.\n";
+        echo "To find out how to customize it, check out our wiki:\n";
+        echo "https://github.com/JanFoerste/blivy/wiki\n\n";
+        echo "The following commands are available:\n\n";
+
+        $padding = 15;
+        $commands = Config::get('console', 'commands');
+        foreach ($commands as $command => $conf) {
+            $sp = $padding - strlen($command);
+            $pad = $sp > 0 ? str_repeat(' ', $sp) : ' ';
+
+            echo $command . $pad . '=>   ' . $conf['description'] . "\n";
+        }
     }
 }
