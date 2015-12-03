@@ -1,0 +1,10 @@
+<?php
+/**
+ * @author Jan Foerste <me@janfoerste.de>
+ */
+
+require __DIR__ . '/bootstrap/autoload.php';
+require_once __DIR__ . '/bootstrap/app.php';
+
+$cmd = new \Blivy\Console\Command();
+$cmd->handle();

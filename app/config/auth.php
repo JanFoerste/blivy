@@ -15,6 +15,5 @@ return [
 
             'auth_model' => '\Models\UserQuery'
         ]
-
     ]
 ];

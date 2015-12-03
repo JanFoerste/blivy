@@ -14,6 +14,11 @@ require_once __DIR__ . '/../app/helpers.php';
 require_once __DIR__ . '/../app/Http/View/helpers.php';
 
 /**
+ * ### Helpers to be used in external classes
+ */
+require_once __DIR__ . '/../app/External/helpers.php';
+
+/**
  * ### Set up the ORM if config exists
  */
 if (file_exists(__DIR__ . '/../generated-conf/config.php')) require_once __DIR__ . '/../generated-conf/config.php';
