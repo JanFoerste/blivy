@@ -1,6 +1,6 @@
 <?php
 /**
- * ### Welcome to the Blivy PHP-Framework
+ * ### Welcome to the Blivy framework
  *
  * ### https://github.com/JanFoerste/blivy
  *

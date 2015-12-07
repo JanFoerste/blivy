@@ -7,7 +7,7 @@ namespace Blivy\Queue\Job;
 
 use Blivy\Queue\Queue;
 
-class TestJob extends Queue
+class TestJob extends Queue implements JobInterface
 {
     protected $print;
 

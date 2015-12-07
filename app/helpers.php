@@ -10,7 +10,7 @@
  */
 function appdir()
 {
-    return realpath(__DIR__ . '/').'/';
+    return realpath(__DIR__ . '/') . '/';
 }
 
 /**
@@ -20,7 +20,7 @@ function appdir()
  */
 function httpdir()
 {
-    return realpath(appdir() . 'Http/').'/';
+    return realpath(appdir() . 'Http/') . '/';
 }
 
 /**
@@ -30,7 +30,7 @@ function httpdir()
  */
 function viewdir()
 {
-    return realpath(httpdir() . 'resources/views/').'/';
+    return realpath(httpdir() . 'resources/views/') . '/';
 }
 
 /**
@@ -70,7 +70,7 @@ function cachedir()
  */
 function filecachedir()
 {
-    return realpath(cachedir() . 'file/').'/';
+    return realpath(cachedir() . 'file/') . '/';
 }
 
 /**
@@ -184,5 +184,23 @@ function decimalConvert($val)
  */
 function input_r($name)
 {
-    return \Manager\Request\Input::route($name);
+    return \Blivy\Request\Input::route($name);
+}
+
+/**
+ * ### Returns the uri for a named route
+ *
+ * @param $name
+ * @return int|string
+ */
+function route($name)
+{
+    $routes = json_decode(file_get_contents(httpdir() . 'routes.json'), true);
+    foreach ($routes as $uri => $route) {
+        if (array_key_exists('name', $route) && $route['name'] === $name) {
+            return $uri;
+        }
+    }
+
+    return '#';
 }
