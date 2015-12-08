@@ -16,7 +16,12 @@ class Flash
     private static function init()
     {
         if (!isset($SESSION['flash'])) {
-            $_SESSION['flash'] = [];
+            $_SESSION['flash'] = [
+                'error' => [],
+                'warning' => [],
+                'info' => [],
+                'success' => []
+            ];
         }
 
         return $_SESSION['flash'];
@@ -50,15 +55,57 @@ class Flash
     }
 
     /**
+     * @return array
+     */
+    public static function getErrorMessages()
+    {
+        $arr = self::init();
+        return $arr['error'];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getWarningMessages()
+    {
+        $arr = self::init();
+        return $arr['warning'];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getInfoMessages()
+    {
+        $arr = self::init();
+        return $arr['info'];
+    }
+
+    /**
+     * @return $array
+     */
+    public static function getSuccessMessages()
+    {
+        $arr = self::init();
+        return $arr['success'];
+    }
+
+    /**
      * ### Sets flash value
      *
+     * @param $type
      * @param $key
      * @param $message
      */
-    public static function set($key, $message)
+    public static function set($type = 'info', $key = '', $message = '')
     {
         $arr = self::init();
-        $arr[$key] = $message;
+        $arr = $arr[$type];
+        if ($key !== '') {
+            $arr[$key] = $message;
+        } else {
+            array_push($arr, $message);
+        }
         $_SESSION['flash'] = $arr;
     }
 }
