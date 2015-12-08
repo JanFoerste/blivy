@@ -41,6 +41,8 @@ class Request
         if (!isset($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = hash("sha512", mt_rand(0, mt_getrandmax()));
         }
+
+        if (isset($_SESSION['flash'])) unset($_SESSION['flash']);
     }
 
 }

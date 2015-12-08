@@ -15,12 +15,13 @@ class Flash
      */
     private static function init()
     {
-        if (!isset($SESSION['flash'])) {
+        if (!isset($_SESSION['flash'])) {
             $_SESSION['flash'] = [
                 'error' => [],
                 'warning' => [],
                 'info' => [],
-                'success' => []
+                'success' => [],
+                'formset' => []
             ];
         }
 
@@ -52,6 +53,20 @@ class Flash
         $get = $arr[$key];
         unset($arr[$key]);
         return $get;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getFormValue($key)
+    {
+        $arr = self::init();
+        $array = $arr['formset'];
+        if (isset($array[$key])) {
+            return $array[$key];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -91,20 +106,59 @@ class Flash
     }
 
     /**
+     * @param $key
+     * @return bool
+     */
+    public static function hasError($key)
+    {
+        $arr = self::init();
+        return isset($arr['error'][$key]);
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public static function hasInfo($key)
+    {
+        $arr = self::init();
+        return isset($arr['info'][$key]);
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public static function hasWarning($key)
+    {
+        $arr = self::init();
+        return isset($arr['warning'][$key]);
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public static function hasSuccess($key)
+    {
+        $arr = self::init();
+        return isset($arr['success'][$key]);
+    }
+
+    /**
      * ### Sets flash value
      *
      * @param $type
      * @param $key
      * @param $message
      */
-    public static function set($type = 'info', $key = '', $message = '')
+    public static function set($type = 'info', $message = '', $key = '')
     {
         $arr = self::init();
-        $arr = $arr[$type];
         if ($key !== '') {
-            $arr[$key] = $message;
+            $arr[$type][$key] = $message;
         } else {
-            array_push($arr, $message);
+            array_push($arr[$type], $message);
         }
         $_SESSION['flash'] = $arr;
     }
