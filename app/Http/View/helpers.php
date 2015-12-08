@@ -20,3 +20,8 @@ function templatePath($tpl)
 
     return $path;
 }
+
+function asset($val)
+{
+    return '/' . $val;
+}
