@@ -91,8 +91,9 @@ class DBAuthProvider implements AuthInterface
         $cookie_time = (3600 * 24 * 30);
         $sha = sha1($hash);
         $remember = $user->getId() . '.' . $sha;
+        $hostname = Config::get('app', 'hostname');
 
-        setcookie($cookie_name, $remember, time() + $cookie_time);
+        setcookie($cookie_name, $remember, time() + $cookie_time, '/', $hostname);
 
         $user->setRemember($sha);
         $user->save();
