@@ -286,7 +286,9 @@ class Router
 
     public function redirect($uri)
     {
-        return $this->route(false, $uri);
+        $_SESSION['blivy_redirect'] = true;
+        header('Location: ' . $uri);
+        die();
     }
 
     /**

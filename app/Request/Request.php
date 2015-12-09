@@ -42,7 +42,11 @@ class Request
             $_SESSION['csrf_token'] = hash("sha512", mt_rand(0, mt_getrandmax()));
         }
 
-        if (isset($_SESSION['flash'])) unset($_SESSION['flash']);
+        if (!isset($_SESSION['blivy_redirect']) || $_SESSION['blivy_redirect'] !== true) {
+            if (isset($_SESSION['flash'])) unset($_SESSION['flash']);
+        } else {
+            unset($_SESSION['blivy_redirect']);
+        }
     }
 
 }
