@@ -5,15 +5,10 @@
 
 namespace Blivy\Http\Controllers;
 
-use Blivy\Http\View\View;
-
 class PageController
 {
     public function home()
     {
-        $view = new View('home');
-        $view->set('extension', 'shared:extend');
-
-        return $view->make();
+        echo 'Home';
     }
 }

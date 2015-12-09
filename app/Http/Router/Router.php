@@ -13,6 +13,7 @@ use Blivy\Exception\HttpNotFoundException;
 use Blivy\Exception\MethodNotFoundException;
 use Blivy\Exception\RoutingException;
 use Blivy\Request\Guard;
+use Blivy\Support\Config;
 
 class Router
 {
@@ -220,8 +221,31 @@ class Router
     }
 
     /**
+     * ### Runs the defined middleware
+     *
+     * @return bool
+     * @throws ClassNotFoundException
+     */
+    private function runMiddleware()
+    {
+        if (!isset($this->route['middleware'])) {
+            return true;
+        }
+
+        $middleware = $this->route['middleware'];
+        $class = 'Blivy\Http\Middleware\\' . $middleware;
+        if (!class_exists($class)) {
+            throw new ClassNotFoundException($class);
+        }
+
+        return new $class();
+    }
+
+    /**
      * ### Does the actual routing and runs the requested method
      *
+     * @param boolean $verify
+     * @param string $uri
      * @return $this
      * @throws ClassNotFoundException
      * @throws Exception
@@ -229,10 +253,19 @@ class Router
      * @throws HttpNotFoundException
      * @throws MethodNotFoundException
      */
-    public function route()
+    public function route($verify = true, $uri = '')
     {
+        if ($uri) {
+            $this->uri = $uri;
+        }
+
         $this->findRoute();
-        $this->verifyMethod();
+
+        if ($verify) {
+            $this->verifyMethod();
+        }
+
+        $this->runMiddleware();
 
         $data = $this->explodeRoute($this->route['controller']);
         $class = 'Blivy\Http\Controllers\\' . $data[0];
@@ -246,8 +279,12 @@ class Router
             throw new MethodNotFoundException($class . ':' . $data[1]);
         }
 
-        $init->{$data[1]}();
-        return $this;
+        return $init->{$data[1]}();
+    }
+
+    public function redirect($uri)
+    {
+        return $this->route(false, $uri);
     }
 
     /**

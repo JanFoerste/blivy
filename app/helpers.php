@@ -204,3 +204,14 @@ function route($name)
 
     return '#';
 }
+
+/**
+ * ### Redirects to the given uri in the same request
+ *
+ * @param $uri
+ * @return mixed
+ */
+function redirect($uri)
+{
+    return $_SESSION['router']->redirect($uri);
+}

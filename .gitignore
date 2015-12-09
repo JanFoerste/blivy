@@ -1,6 +1,4 @@
-# ---> Laravel
 .idea/
-/bootstrap/compiled.php
 vendor/
 generated-*/
 .env.*.php
@@ -8,4 +6,4 @@ generated-*/
 .env
 propel.yml
 /bootstrap/cache/file/*
-/storage/log/*
+*.log

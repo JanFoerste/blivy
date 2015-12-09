@@ -3,13 +3,5 @@
     "method": "GET",
     "controller": "PageController:home",
     "name": "index"
-  },
-  "/user/(id)/edit": {
-    "method": "GET",
-    "controller": "PageController:home",
-    "name": "user",
-    "params": {
-      "(id)": "integer"
-    }
   }
 }
