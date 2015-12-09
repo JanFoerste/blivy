@@ -76,7 +76,7 @@ class View
      *
      * @param $tpl
      */
-    public function take($tpl)
+    public function extend($tpl)
     {
         $path = templatePath($tpl);
         include $path;

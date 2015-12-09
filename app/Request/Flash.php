@@ -155,11 +155,20 @@ class Flash
     public static function set($type = 'info', $message = '', $key = '')
     {
         $arr = self::init();
-        if ($key !== '') {
-            $arr[$type][$key] = $message;
+        if (array_key_exists($type, $arr)) {
+            if ($key !== '') {
+                $arr[$type][$key] = $message;
+            } else {
+                array_push($arr[$type], $message);
+            }
         } else {
-            array_push($arr[$type], $message);
+            if ($key !== '') {
+                $arr[$key] = $message;
+            } else {
+                array_push($arr, $message);
+            }
         }
+
         $_SESSION['flash'] = $arr;
     }
 }

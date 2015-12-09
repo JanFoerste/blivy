@@ -223,22 +223,24 @@ class Router
     /**
      * ### Runs the defined middleware
      *
-     * @return bool
+     * @return void
      * @throws ClassNotFoundException
      */
     private function runMiddleware()
     {
-        if (!isset($this->route['middleware'])) {
-            return true;
-        }
+        if (isset($this->route['middleware'])) {
 
-        $middleware = $this->route['middleware'];
-        $class = 'Blivy\Http\Middleware\\' . $middleware;
-        if (!class_exists($class)) {
-            throw new ClassNotFoundException($class);
-        }
+            $middleware = $this->route['middleware'];
 
-        return new $class();
+            foreach ($middleware as $item) {
+                $class = 'Blivy\Http\Middleware\\' . $item;
+                if (!class_exists($class)) {
+                    throw new ClassNotFoundException($class);
+                }
+
+                new $class();
+            }
+        }
     }
 
     /**
